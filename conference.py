@@ -612,10 +612,12 @@ class ConferenceApi(remote.Service):
         for field in session_form.all_fields():
             if hasattr(session, field.name):
                 # convert Date to date string; just copy others
-                if field.name.endswith('Date'):
-                    setattr(session, field.name, str(getattr(session, field.name)))
-                # elif field.name == 'typeOfSession':
-                #     setattr(session_form, field.name, getattr(SessionType, getattr(session, field.name)))
+                if field.name.endswith('date'):
+                    setattr(session_form, field.name, str(getattr(session, field.name)))
+                elif field.name.endswith('Time'):
+                    setattr(session_form, field.name, str(getattr(session, field.name)))
+                elif field.name == 'typeOfSession':
+                    setattr(session_form, field.name, getattr(SessionType, getattr(session, field.name)))
                 else:
                     setattr(session_form, field.name, getattr(session, field.name))
         session_form.check_initialized()
@@ -675,7 +677,15 @@ class ConferenceApi(remote.Service):
 
         # convert dates from strings to Date objects; set month based on start_date
         if data['date']:
+            print(data['date'])
             data['date'] = datetime.strptime(data['date'][:10], "%Y-%m-%d").date()
+        if data['startTime']:
+            print(data['startTime'])
+            data['startTime'] = datetime.strptime(data['startTime'], "%H:%M").time()
+            print(data['startTime'])
+
+
+
 
         # generate Conference Key based on websafeKey and
         # Session key based on Conference key
@@ -684,12 +694,8 @@ class ConferenceApi(remote.Service):
         session_key = ndb.Key(Session, session_id, parent=conference_key)
         data['key'] = session_key
 
-        """
         if data['typeOfSession']:
             data['typeOfSession'] = str(data['typeOfSession'])
-            """
-
-
 
         # create Conference, send email to organizer confirming
         # creation of Conference & return (modified) ConferenceForm
