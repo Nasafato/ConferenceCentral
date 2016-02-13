@@ -108,3 +108,44 @@ class ConferenceQueryForms(messages.Message):
     """ConferenceQueryForms -- multiple ConferenceQueryForm inbound form message"""
     filters = messages.MessageField(ConferenceQueryForm, 1, repeated=True)
 
+class Session(ndb.Model):
+    """Session -- stores a session"""
+    name = ndb.StringProperty(required=True)
+    highlights = ndb.StringProperty()
+    speaker = ndb.StringProperty()
+    duration = ndb.IntegerProperty()
+    typeOfSession = ndb.StringProperty(default='NOT_SPECIFIED')
+    date = ndb.DateProperty()
+    startTime = ndb.TimeProperty()
+
+class SessionForm(messages.Message):
+    """SessionForm -- session form message"""
+    name = messages.StringField(1, required=True)
+    highlights = messages.StringField(2)
+    speaker = messages.StringField(3)
+    duration = messages.IntegerField(4)
+    typeOfSession = messages.EnumField('SessionType', 5)
+    date = messages.StringField(6)
+    startTime = messages.StringField(7)
+
+class SessionMiniForm(messages.Message):
+    """ProfileMiniForm -- update Profile form message"""
+    typeOfSession = messages.EnumField('SessionType', 1, required=True)
+
+class SessionForms(messages.Message):
+    """SessionForms -- multiple Session outbound form message"""
+    items = messages.MessageField(SessionForm, 1, repeated=True)
+
+
+class SessionType(messages.Enum):
+    """SessionType -- different kinds of session types"""
+    NOT_SPECIFIED = 1
+    WORKSHOP = 2
+    NETWORKING = 3
+    LECTURE = 4
+
+class SessionForms(messages.Message):
+    """SessionForms -- multiple Session outbound form message"""
+    items = messages.MessageField(SessionForm, 1, repeated=True)
+
+
