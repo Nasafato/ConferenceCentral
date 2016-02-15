@@ -27,6 +27,7 @@ class Profile(ndb.Model):
     mainEmail = ndb.StringProperty()
     teeShirtSize = ndb.StringProperty(default='NOT_SPECIFIED')
     conferenceKeysToAttend = ndb.StringProperty(repeated=True)
+    sessionWishlist = ndb.StringProperty(repeated=True)
 
 class ProfileMiniForm(messages.Message):
     """ProfileMiniForm -- update Profile form message"""
@@ -39,6 +40,7 @@ class ProfileForm(messages.Message):
     mainEmail = messages.StringField(2)
     teeShirtSize = messages.EnumField('TeeShirtSize', 3)
     conferenceKeysToAttend = messages.StringField(4, repeated=True)
+    sessionWishlist = messages.StringField(5, repeated=True)
 
 class StringMessage(messages.Message):
     """StringMessage-- outbound (single) string message"""
@@ -136,6 +138,15 @@ class SessionForms(messages.Message):
     """SessionForms -- multiple Session outbound form message"""
     items = messages.MessageField(SessionForm, 1, repeated=True)
 
+class SessionTimeQueryForm(messages.Message):
+    """SessionForm -- for querying sessions within a certain time range"""
+    startTime = messages.StringField(1, required=True)
+    endTime = messages.StringField(3, required=True)
+
+class SessionTypeTimeForm(messages.Message):
+    """SessionTypeTimeForm -- for excluding type and time"""
+    excludedSessionType = messages.EnumField('SessionType', 1)
+    latestTime = messages.StringField(2)
 
 class SessionType(messages.Enum):
     """SessionType -- different kinds of session types"""
