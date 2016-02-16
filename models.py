@@ -129,6 +129,7 @@ class SessionForm(messages.Message):
     typeOfSession = messages.EnumField('SessionType', 5)
     date = messages.StringField(6)
     startTime = messages.StringField(7)
+    websafeSessionKey = messages.StringField(8)
 
 class SessionMiniForm(messages.Message):
     """ProfileMiniForm -- update Profile form message"""
