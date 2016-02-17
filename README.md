@@ -1,7 +1,16 @@
 # Running the Application
 1. Go to [conferencecentral-1180.appspot.com](https://conferencecentral-1180.appspot.com/).
 2. Or, if you want to go to the API explorer, go to [conferencecentral-1180.appspot.com/_ah/api/explorer/](https://conferencecentral-1180.appspot.com/_ah/api/explorer).
-3. Or, use Google App Engine Launcher to add this project's directory and then run it/deploy it. If run locally, you can access the local webpage at [localhost:8080](http://localhost:8080).
+
+**To actually get it set up locally, follow these instructions:**
+
+1. Update the value of application in app.yaml to the app ID you have registered in the App Engine admin console and would like to use to host your instance of this sample.
+2. Update the values at the top of settings.py to reflect the respective client IDs you have registered in the Developer Console.
+3. Update the value of CLIENT_ID in static/js/app.js to the Web client ID
+(Optional) Mark the configuration files as unchanged as follows: $ git update-index --assume-unchanged app.yaml settings.py static/js/app.js
+4. Run the app with the devserver using dev_appserver.py DIR, and ensure it's running by visiting your local server's address (by default localhost:8080.)
+(Optional) Generate your client library(ies) with the endpoints tool.
+5. Deploy your application.
 
 # Creating Sessions
 Sessions have most of the usual fields. It's pretty apparent right here what they are:
